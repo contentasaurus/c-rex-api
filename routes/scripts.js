@@ -76,6 +76,31 @@ router
 			res.send(x)
 		})
 	)
+	.get('/by-type/:type_id(\\d+)', (req, res, next) =>
+		db.select(
+			'name',
+			'html as content'
+		)
+		.from('scripts')
+		.where('script_type_id', req.params.type_id)
+		.orderBy('priority', 'desc')
+		.then(function(scripts){
+			res.send(scripts)
+		})
+	)
+	.get('/by-type/:type_name', (req, res, next) =>
+		db.select(
+			'scripts.name',
+			'scripts.html as content'
+		)
+		.from('scripts')
+			.leftJoin('script_types','scripts.script_type_id', 'script_types.id')
+		.where('script_types.name', req.params.type_name)
+		.orderBy('scripts.priority', 'desc')
+		.then(function(scripts){
+			res.send(scripts)
+		})
+	)
 	.put('/:id(\\d+)', (req, res, next) =>
 		db('scripts').where('id', req.params.id)
 		.update(req.body)

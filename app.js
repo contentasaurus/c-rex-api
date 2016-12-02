@@ -28,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //==============================================================================
 
 var version = '/v1';
-app.use(version + '/', require('./routes/index'));
 app.use(version + '/blog', require('./routes/blog'));
 app.use(version + '/components', require('./routes/components'));
 app.use(version + '/datatypes', require('./routes/datatypes'));
@@ -40,6 +39,7 @@ app.use(version + '/script-types', require('./routes/script_types'));
 app.use(version + '/scripts', require('./routes/scripts'));
 app.use(version + '/site-data', require('./routes/site_data'));
 app.use(version + '/users', require('./routes/users'));
+app.use(version + '/', require('./routes/index'));
 
 //==============================================================================
 
